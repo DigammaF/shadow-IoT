@@ -58,6 +58,7 @@ void dropWidget(widget_t* widget);
 void initGUI(gui_t* gui);
 void dropGUI(gui_t* gui);
 
+void clientTest();
 int mainClient(int argc, const char* argv[]);
 int mainGUIClient(int argc, const char* argv[]);
 int mainBlindClient(int argc, const char* argv[]);

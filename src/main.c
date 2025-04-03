@@ -14,6 +14,7 @@ int main(int argc, const char** argv) {
 		if (strcmp(argv[1], "client") == 0) { mainClient(argc, argv); }
 		if (strcmp(argv[1], "blind") == 0) { mainBlindClient(argc, argv); }
 		if (strcmp(argv[1], "guiclient") == 0) { mainGUIClient(argc, argv); }
+		if (strcmp(argv[1], "test") == 0) { clientTest(); }
 	}
 
 	return 0;
