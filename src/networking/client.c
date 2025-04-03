@@ -107,6 +107,7 @@ void awaitInput(client_t* client) {
 }
 
 int mainBlindClient(int argc, const char* argv[]) {
+	UNUSED(argc);
 	socket_t clientSocket;
 	connectServer(&clientSocket, argv[2], SERVER_PORT);
 	client_t client;
