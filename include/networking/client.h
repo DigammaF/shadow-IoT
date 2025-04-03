@@ -12,9 +12,9 @@
 
 #define MAX_INPUT 300
 
-#define UP_BUTTON 0
-#define DOWN_BUTTON 0
-#define VALIDATE_BUTTON 0
+#define UP_BUTTON 37
+#define DOWN_BUTTON 33
+#define VALIDATE_BUTTON 35
 
 typedef struct {
 	bool enter; bool tab; bool key_up; bool key_down;

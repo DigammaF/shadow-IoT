@@ -133,9 +133,9 @@ int mainClient(int argc, const char* argv[]) {
 	pinMode(UP_BUTTON, INPUT);
 	pinMode(DOWN_BUTTON, INPUT);
 	pinMode(VALIDATE_BUTTON, INPUT);
-	pullUpDnControl(UP_BUTTON, PUD_UP);
-	pullUpDnControl(DOWN_BUTTON, PUD_UP);
-	pullUpDnControl(VALIDATE_BUTTON, PUD_UP);
+	pullUpDnControl(UP_BUTTON, PUD_DOWN);
+	pullUpDnControl(DOWN_BUTTON, PUD_DOWN);
+	pullUpDnControl(VALIDATE_BUTTON, PUD_DOWN);
 
 	socket_t clientSocket;
 	connectServer(&clientSocket, argv[2], SERVER_PORT);
@@ -186,9 +186,9 @@ void phaseLogin(client_t* client) {
 
 		if (
 			FD_ISSET(fileno(stdin), &client->ioState)
-			|| (digitalRead(UP_BUTTON) == LOW)
-			|| (digitalRead(DOWN_BUTTON) == LOW)
-			|| (digitalRead(VALIDATE_BUTTON) == LOW)
+			|| (digitalRead(UP_BUTTON))
+			|| (digitalRead(DOWN_BUTTON))
+			|| (digitalRead(VALIDATE_BUTTON))
 		) {
 			handleUserInput(client, &outputY, login, &loginHead, password, &passwordHead, &editionMode);
 		}
@@ -332,7 +332,7 @@ void handleServerResponse(client_t* client, unsigned* outputY) {
 void handleUserInput(client_t* client, unsigned* outputY, char* login, unsigned* loginHead, char* password, unsigned* passwordHead, unsigned* editionMode) {
 	int character = getch();
 
-	if (character == '\n') {
+	if (character == '\n' || digitalRead(VALIDATE_BUTTON)) {
 		clear();
 		login[*loginHead] = '\0';
 		password[*passwordHead] = '\0';
