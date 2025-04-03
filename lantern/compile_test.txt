@@ -1,0 +1,2 @@
+gcc -o test test.c -Iinclude -L. -llantern
+gcc -o prgm prgm.c -Ipath/to/include -Lpath/to/library -llantern

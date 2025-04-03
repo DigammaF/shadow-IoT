@@ -1,0 +1,24 @@
+\hypertarget{session_8h_source}{}\doxysection{session.\+h}
+\mbox{\hyperlink{session_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <sys/types.h>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <sys/socket.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <netinet/in.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{socket__t_8h}{socket\_t.h}}"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#ifndef SESSION\_H}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#define SESSION\_H}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keywordtype}{int} \mbox{\hyperlink{session_8h_a91fb199a6c9aa4cf407d2ecec69495e2}{createSocket}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int} mode, \mbox{\hyperlink{structsocket__t}{socket\_t}}* socketObject);}
+\DoxyCodeLine{12 \textcolor{keywordtype}{int} \mbox{\hyperlink{session_8h_ad552f829764ec4a0cb1df45b7f0fd4f7}{closeSocket}}(\mbox{\hyperlink{structsocket__t}{socket\_t}}* socket);}
+\DoxyCodeLine{13 \textcolor{keywordtype}{int} \mbox{\hyperlink{session_8h_a2cb3fc73b84995febc9a522e855b1b83}{bindLocal}}(\mbox{\hyperlink{structsocket__t}{socket\_t}}* socket, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* address, \textcolor{keyword}{const} \textcolor{keywordtype}{short} port);}
+\DoxyCodeLine{14 \textcolor{keywordtype}{int} \mbox{\hyperlink{session_8h_ab17f4d8c8b9d19207593fbaa032654d8}{listenSocket}}(\mbox{\hyperlink{structsocket__t}{socket\_t}}* socket, \textcolor{keyword}{const} \textcolor{keywordtype}{int} maxClientCount);}
+\DoxyCodeLine{15 \textcolor{keywordtype}{int} \mbox{\hyperlink{session_8h_a98c263f4e4e7556b2c0886ba0335e9db}{acceptRemote}}(\mbox{\hyperlink{structsocket__t}{socket\_t}}* socket, \mbox{\hyperlink{structsocket__t}{socket\_t}}* newSocket);}
+\DoxyCodeLine{16 \textcolor{keywordtype}{int} \mbox{\hyperlink{session_8h_afec3e66508ce3ed33549b51caae21d50}{connectToRemote}}(\mbox{\hyperlink{structsocket__t}{socket\_t}}* socket, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* address, \textcolor{keyword}{const} \textcolor{keywordtype}{short} port);}
+\DoxyCodeLine{17 \textcolor{keywordtype}{int} \mbox{\hyperlink{session_8h_aeefb1e63b863fabf5ee96c9fc3558cd0}{setRemote}}(\mbox{\hyperlink{structsocket__t}{socket\_t}}* socket, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* address, \textcolor{keyword}{const} \textcolor{keywordtype}{short} port);}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

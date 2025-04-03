@@ -1,0 +1,56 @@
+# Compiled object files
+*.o
+*.lo
+*.la
+*.al
+
+# Executable files
+*.exe
+*.out
+*.app
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+
+# Debug and core dump files
+*.d
+*.dSYM/
+*.stackdump
+*.core
+core
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# Dependency resolution files (e.g., autoconf, automake)
+.dep
+.deps/
+aclocal.m4
+libtool
+ltmain.sh
+m4/
+*.m4
+install-sh
+missing
+depcomp
+
+# Version control or package manager artifacts
+*.orig
+*.rej
+*~ 
+*.bak
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db

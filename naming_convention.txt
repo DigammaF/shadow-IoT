@@ -1,0 +1,28 @@
+
+les fonctions sont nommées selon une certaine logique:
+
+	initX(X) / dropX(X)
+		réalise l'allocation et la libération de la mémoire des éléments internes de X et la mise en état initial des structures de données
+		! ne réalise pas l'allocation mémoire nécessaire pour accueillir X, ni la libération de cette mémoire
+
+	createX(A, X) / deleteX(A, X)
+		ajoute / supprime un élément X du dépôt de données A
+		ne réalise pas de init / drop
+
+	makeX(A)
+		écrit dans un objet en état initial pour en faire un objet spécifiique
+
+	addXToA(A, X) / removeXFromA(A, X)
+		primitives qui manipulent les hashmaps. le conteneur vient en premier
+
+	triggerX
+		envoie un évènement à un objet interne
+
+	notifyX
+		envoie un évènement à un objet en communication avec un utilisateur
+
+	doX
+		effectue une action après avoir fait les tests associés
+		TODO implémenter
+
+beaucoup d'objets ont des champs contentant 'key'. ce champs contiennent la clé de l'objet dans la hashmap qui le contient

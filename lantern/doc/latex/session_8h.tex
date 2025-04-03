@@ -1,0 +1,156 @@
+\hypertarget{session_8h}{}\doxysection{session.\+h File Reference}
+\label{session_8h}\index{session.h@{session.h}}
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}socket\+\_\+t.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{session_8h_a91fb199a6c9aa4cf407d2ecec69495e2}{create\+Socket}} (const int mode, \mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$socket\+Object)
+\begin{DoxyCompactList}\small\item\em Créée une socket en mode SOCK\+\_\+\+STREAM ou SOCK\+\_\+\+DGRAM, remplissant les champs .file\+Descriptor et .mode. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{session_8h_ad552f829764ec4a0cb1df45b7f0fd4f7}{close\+Socket}} (\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$socket)
+\begin{DoxyCompactList}\small\item\em Ferme une socket. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{session_8h_a2cb3fc73b84995febc9a522e855b1b83}{bind\+Local}} (\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$socket, const char $\ast$address, const short port)
+\begin{DoxyCompactList}\small\item\em Associe la socket à une addresse, remplissant le champ .local. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{session_8h_ab17f4d8c8b9d19207593fbaa032654d8}{listen\+Socket}} (\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$socket, const int max\+Client\+Count)
+\begin{DoxyCompactList}\small\item\em Attends que des clients soient prêt à être acceptés. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{session_8h_a98c263f4e4e7556b2c0886ba0335e9db}{accept\+Remote}} (\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$socket, \mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$new\+Socket)
+\item 
+int \mbox{\hyperlink{session_8h_afec3e66508ce3ed33549b51caae21d50}{connect\+To\+Remote}} (\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$socket, const char $\ast$address, const short port)
+\begin{DoxyCompactList}\small\item\em Se connecte à un serveur, remplissant le champ .remote. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{session_8h_aeefb1e63b863fabf5ee96c9fc3558cd0}{set\+Remote}} (\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$socket, const char $\ast$address, const short port)
+\begin{DoxyCompactList}\small\item\em Indique l\textquotesingle{}addresse de destination de la socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{session_8h_a98c263f4e4e7556b2c0886ba0335e9db}\label{session_8h_a98c263f4e4e7556b2c0886ba0335e9db}} 
+\index{session.h@{session.h}!acceptRemote@{acceptRemote}}
+\index{acceptRemote@{acceptRemote}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{acceptRemote()}{acceptRemote()}}
+{\footnotesize\ttfamily int accept\+Remote (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$}]{socket,  }\item[{\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$}]{new\+Socket }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{session_8h_a2cb3fc73b84995febc9a522e855b1b83}\label{session_8h_a2cb3fc73b84995febc9a522e855b1b83}} 
+\index{session.h@{session.h}!bindLocal@{bindLocal}}
+\index{bindLocal@{bindLocal}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{bindLocal()}{bindLocal()}}
+{\footnotesize\ttfamily int bind\+Local (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$}]{socket,  }\item[{const char $\ast$}]{address,  }\item[{const short}]{port }\end{DoxyParamCaption})}
+
+
+
+Associe la socket à une addresse, remplissant le champ .local. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & socket en mode STREAM \\
+\hline
+{\em address} & adresse IP \\
+\hline
+{\em port} & port \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+indicateur de réussite POSIX 
+\end{DoxyReturn}
+\mbox{\Hypertarget{session_8h_ad552f829764ec4a0cb1df45b7f0fd4f7}\label{session_8h_ad552f829764ec4a0cb1df45b7f0fd4f7}} 
+\index{session.h@{session.h}!closeSocket@{closeSocket}}
+\index{closeSocket@{closeSocket}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{closeSocket()}{closeSocket()}}
+{\footnotesize\ttfamily int close\+Socket (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$}]{socket }\end{DoxyParamCaption})}
+
+
+
+Ferme une socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & socket en mode STREAM \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+indicateur de réussite POSIX 
+\end{DoxyReturn}
+\mbox{\Hypertarget{session_8h_afec3e66508ce3ed33549b51caae21d50}\label{session_8h_afec3e66508ce3ed33549b51caae21d50}} 
+\index{session.h@{session.h}!connectToRemote@{connectToRemote}}
+\index{connectToRemote@{connectToRemote}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{connectToRemote()}{connectToRemote()}}
+{\footnotesize\ttfamily int connect\+To\+Remote (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$}]{socket,  }\item[{const char $\ast$}]{address,  }\item[{const short}]{port }\end{DoxyParamCaption})}
+
+
+
+Se connecte à un serveur, remplissant le champ .remote. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & socket en mode STREAM \\
+\hline
+{\em address} & adresse IP \\
+\hline
+{\em port} & port \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+indicateur de réussite POSIX 
+\end{DoxyReturn}
+\mbox{\Hypertarget{session_8h_a91fb199a6c9aa4cf407d2ecec69495e2}\label{session_8h_a91fb199a6c9aa4cf407d2ecec69495e2}} 
+\index{session.h@{session.h}!createSocket@{createSocket}}
+\index{createSocket@{createSocket}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{createSocket()}{createSocket()}}
+{\footnotesize\ttfamily int create\+Socket (\begin{DoxyParamCaption}\item[{const int}]{mode,  }\item[{\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$}]{socket\+Object }\end{DoxyParamCaption})}
+
+
+
+Créée une socket en mode SOCK\+\_\+\+STREAM ou SOCK\+\_\+\+DGRAM, remplissant les champs .file\+Descriptor et .mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & SOCK\+\_\+\+STREAM ou SOCK\+\_\+\+DGRAM \\
+\hline
+{\em socket\+Object} & une socket vierge \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+indicateur de réussite POSIX 
+\end{DoxyReturn}
+\mbox{\Hypertarget{session_8h_ab17f4d8c8b9d19207593fbaa032654d8}\label{session_8h_ab17f4d8c8b9d19207593fbaa032654d8}} 
+\index{session.h@{session.h}!listenSocket@{listenSocket}}
+\index{listenSocket@{listenSocket}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{listenSocket()}{listenSocket()}}
+{\footnotesize\ttfamily int listen\+Socket (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$}]{socket,  }\item[{const int}]{max\+Client\+Count }\end{DoxyParamCaption})}
+
+
+
+Attends que des clients soient prêt à être acceptés. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & socket en mode STREAM \\
+\hline
+{\em max\+Client\+Count} & nombre maximal de client dans la file d\textquotesingle{}attente \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+indicateur de réussite POSIX 
+\end{DoxyReturn}
+\mbox{\Hypertarget{session_8h_aeefb1e63b863fabf5ee96c9fc3558cd0}\label{session_8h_aeefb1e63b863fabf5ee96c9fc3558cd0}} 
+\index{session.h@{session.h}!setRemote@{setRemote}}
+\index{setRemote@{setRemote}!session.h@{session.h}}
+\doxysubsubsection{\texorpdfstring{setRemote()}{setRemote()}}
+{\footnotesize\ttfamily int set\+Remote (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$}]{socket,  }\item[{const char $\ast$}]{address,  }\item[{const short}]{port }\end{DoxyParamCaption})}
+
+
+
+Indique l\textquotesingle{}addresse de destination de la socket. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & socket en mode DGRAM \\
+\hline
+{\em address} & adresse IP \\
+\hline
+{\em port} & port \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+indicateur de réussite POSIX 
+\end{DoxyReturn}

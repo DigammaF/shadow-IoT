@@ -1,0 +1,56 @@
+\hypertarget{data_8h}{}\doxysection{data.\+h File Reference}
+\label{data_8h}\index{data.h@{data.h}}
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}session.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{data_8h_a6b20d41d6252e9871430c242cb1a56e7}{BUFFER\+\_\+\+SIZE}}~1024
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{data_8h_a3252e21e2826939457df066b354e2978}{send\+Data}} (\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$socket, const char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Envoie des données à .remote. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{data_8h_aecd3a06ef2c8741fb2c4275348d998b3}{recv\+Data}} (\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$socket, char $\ast$data, size\+\_\+t max\+Data\+Length)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{data_8h_a6b20d41d6252e9871430c242cb1a56e7}\label{data_8h_a6b20d41d6252e9871430c242cb1a56e7}} 
+\index{data.h@{data.h}!BUFFER\_SIZE@{BUFFER\_SIZE}}
+\index{BUFFER\_SIZE@{BUFFER\_SIZE}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{BUFFER\_SIZE}{BUFFER\_SIZE}}
+{\footnotesize\ttfamily \#define BUFFER\+\_\+\+SIZE~1024}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{data_8h_aecd3a06ef2c8741fb2c4275348d998b3}\label{data_8h_aecd3a06ef2c8741fb2c4275348d998b3}} 
+\index{data.h@{data.h}!recvData@{recvData}}
+\index{recvData@{recvData}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{recvData()}{recvData()}}
+{\footnotesize\ttfamily int recv\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$}]{socket,  }\item[{char $\ast$}]{data,  }\item[{size\+\_\+t}]{max\+Data\+Length }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{data_8h_a3252e21e2826939457df066b354e2978}\label{data_8h_a3252e21e2826939457df066b354e2978}} 
+\index{data.h@{data.h}!sendData@{sendData}}
+\index{sendData@{sendData}!data.h@{data.h}}
+\doxysubsubsection{\texorpdfstring{sendData()}{sendData()}}
+{\footnotesize\ttfamily int send\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsocket__t}{socket\+\_\+t}} $\ast$}]{socket,  }\item[{const char $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Envoie des données à .remote. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & la socket à utiliser \\
+\hline
+{\em data} & chaîne de charactères terminée par un zéro \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nombre d\textquotesingle{}octets envoyés et indicateur de réussite POSIX 
+\end{DoxyReturn}

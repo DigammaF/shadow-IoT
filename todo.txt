@@ -1,0 +1,4 @@
+
+ - change sprintf to snprintf
+ - change champions owner to world so that clients can easily request details about one
+ - change item owner to world

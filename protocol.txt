@@ -1,0 +1,145 @@
+
+le protocol utilisé par notre librarie inet est extrêmement simple:
+un message est terminé lorsque l'on rencontre \0
+
+le protocol mis en place par dessus pour cette application particulière est décrit ci-dessous.
+les mots en majuscule indiquent les commandes litérales.
+les lignes commençant par des tirets signales que le client ou le serveur doivent être dans un état
+particulier pour traiter les commandes suivantes. (voir diagramme d'états)
+
+les messages émis par le server et reçus par un client sont détaillés ci-dessous.
+Chaque description est faite relativement au client, ou au personnage contrôlé par le client
+
+server
+	SET-CONTEXT <int>
+		le contexte dans lequel se trouve le client vient de changer
+		int: context_t
+	OUTPUT <word+>
+		word+: text générique sans métadonnées
+	ERROR <word+>
+		word+: erreur générique sans métadonnées
+	LIST-LINK <int> <word>
+		fait savoir l'existence d'un lien
+		int: clé du lien dans la place
+		word: nom du lien
+	LIST-PAWN <int> <word>
+		fait savoir l'existence d'un pion
+		int: clé du pion dans la place
+		word: nom du pion
+	LIST-FEATURE <int> <word>
+		fait savoir l'existence d'une feature
+		int: clé de la feature dans la place
+		word: nom de la feature
+	LIST-ITEM <int> <word>
+		int: clé
+		word: nom
+	LIST-CHAMPION <int> <word>
+		int: clé dans l'inventaire du joueur OU clé dans le combat actuel si en combat
+		word: nom
+	LIST-ABILITY <int> <word+>
+		int: clé
+		word: description
+	LIST-ACCOUNT <word>
+		fait savoir l'existence d'un compte
+		word: nom du compte
+	LIST-CHAMPION-DEAL <int> <word> <Y|N>
+		int: prix
+		word: nom du champion
+		Y|N: indique si le joueur est à l'origine de cet échange
+	END-LIST
+		signale la fin d'une 
+	ABOUT-PLACE <word>
+		amène l'attention sur une place
+		word: nom de la place
+	ABOUT-PAWN <word>
+		word: nom
+	PAWN-SPAWN <int> <word>
+		un pion vient d'apparaître
+		int: clé du pion dans la place
+		word: nom du pion
+	PAWN-ARRIVED <int> <word>
+		un pion vient d'arriver dans la place
+		int: clé du pion dans la place
+		word: nom du pion
+	PAWN-LEFT <word>
+		un pion vient de quitter la place
+		word: nom du pion
+	MESSAGE <word+>
+		un message addressé au client vient d'arriver
+	YOU-MOVED <word>
+		fait savoir à l'utilisateur que son pion a été déplacé
+		word: nom de la place d'arrivée
+	YOUR-GOLD-CHANGED <word> <word+>
+		word: représente le changement de valeur
+		word+: raisons
+	GAINED-CHAMPION/GAINED-ITEM <int> <word> <word+>
+		int: clé
+		word: nom
+		word: raison
+	LOST-CHAMPION/LOST-ITEM <word> <word+>
+		word: nom
+		word+: raison
+	CHAMPION-USE-ABILITY
+
+client
+	COMMAND <word>+
+		- initial
+		LOGIN <name> <password>
+		REGISTER <name> <password>
+		- gameworld
+		MOVE <int>
+			int: clé du lien dans la place
+		INTERACT <int> <int>
+			int: clé de la feature dans la place
+			int: numéro de l'interaction
+		MESSAGE <word>+
+		GLOBAL-MESSAGE <word>+
+		LIST-ONLINE
+		DUEL-OFFER <int>
+			int: clé du pion dans la place
+		DUEL-ACCEPT <int>
+			int: clé de duel
+		ATTACK <int>
+			int: clé du pion dans la place
+		SELL-CHAMPION <int> <int>
+			int: clé du champion dans l'inventaire
+			int: prix
+		BUY-CHAMPION <int>
+			int: clé du deal
+		SELL-ITEM <int> <int>
+			int: clé de l'objet dans l'inventaire
+			int: prix
+		BUY-ITEM <int>
+			int: clé du deal
+		CHECK-MARKET
+		USE-ITEM <int>
+			utiliser un objet
+			int: clé de l'objet
+		USE-ITEM-ON-CHAMPION <int> <int>
+			utiliser un objet sur un champion
+			int: clé de l'objet
+			int: clé du champion
+		SEE
+			décrire l'emplacement du joueur
+		ME
+			décrire le personnage du joueur (nom + inventaire + champions séléctionnés)
+		SEE-CHAMPIONS
+		SELECT-CHAMPION <int> <int>
+			int: clé du champion dans l'inventaire
+			int: numéro de la place d'équipe
+		UNSELECT-CHAMPION <int>
+			int: numéro de place dans l'équipe
+		- combat
+		SEE
+			décrit l'état du combat
+		ATTACK <int> <int> <int>
+			int: clé du champion source
+			int: clé du champion cible
+			int: clé de la compétence
+		RUNAWAY
+		FLEE <int>
+			int: clé du champion
+		DRAW-OFFER
+		DRAW-ACCEPT
+	END
+	KEEP-ALIVE
