@@ -156,7 +156,7 @@ void phaseLogin(client_t* client) {
 	unsigned loginTextWidth = 21;
 	wmove(window, 1, loginTextWidth);
 	mvwprintw(window, 2, 2, " Mot de passe: ");
-	unsigned passwordTextWidth = 16;
+	// unsigned passwordTextWidth = 16;
 	wrefresh(window);
 	
 	while (!client->loggedIn) {
