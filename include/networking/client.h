@@ -15,6 +15,7 @@
 #define UP_BUTTON 37
 #define DOWN_BUTTON 33
 #define VALIDATE_BUTTON 35
+#define BUZZER 12
 
 typedef struct {
 	bool enter; bool tab; bool key_up; bool key_down;

@@ -125,6 +125,12 @@ int mainBlindClient(int argc, const char* argv[]) {
 	return 0;
 }
 
+void activateBuzzer(int duration){
+    digitalWrite(BUZZER, HIGH);
+    usleep(duration);
+    digitalWrite(BUZZER, LOW);
+}
+
 int mainClient(int argc, const char* argv[]) {
 	UNUSED(argc);
 
@@ -137,9 +143,7 @@ int mainClient(int argc, const char* argv[]) {
 	client.socket = clientSocket;
 	client.running = 1;
 	client.loggedIn = 0;
-
-	if (strcmp(argv[3], "embedded")) { client.embedded = 1; }
-	else { client.embedded = 0; }
+	client.embedded = 1;
 
 	if (client.embedded) {
 		wiringPiSetupGpio();
@@ -311,6 +315,7 @@ void handleServerResponse(client_t* client, unsigned* outputY) {
 		if (context == CONTEXT_GAMEWORLD) {
 			client->loggedIn = 1;
 			clear(); refresh();
+			activateBuzzer(500000);
 			return;
 		}
 	}
