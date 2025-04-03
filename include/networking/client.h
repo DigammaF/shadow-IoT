@@ -68,8 +68,9 @@ typedef struct {
 	unsigned argCount;
 } server_request_context_t;
 
+void phaseLogin(client_t* client);
+
 void* initialClientHandler(void* _);
-void* loginClienthandler(void* _);
 void* registerClientHandler(void* _);
 void* gameworldClientHandler(void* _);
 void* moveClientHandler(void* _);
