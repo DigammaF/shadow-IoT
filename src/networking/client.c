@@ -141,8 +141,6 @@ void phaseLogin(client_t* client) {
 	unsigned width = 60;
 	int startx = (COLS - width) / 2;
 	int starty = (LINES - 10) / 2;
-	WINDOW* window = newwin(4, width, starty, startx);
-	WINDOW* output = newwin(4, width, starty + 5, startx);
 	unsigned outputY = 2;
 
 	char login[MAX_INPUT] = { 0 };
@@ -151,19 +149,16 @@ void phaseLogin(client_t* client) {
 	unsigned passwordHead = 0;
 	unsigned editionMode = 1;
 
-	box(window, 0, 0);
-    mvwprintw(window, 1, 2, ">Nom d'utilisateur: ");
-	unsigned loginTextWidth = 21;
-	wmove(window, 1, loginTextWidth);
-	mvwprintw(window, 2, 2, " Mot de passe: ");
+    mvprintw(1, 2, ">Nom d'utilisateur: ");
+	mvprintw(2, 2, " Mot de passe: ");
 	// unsigned passwordTextWidth = 16;
-	wrefresh(window);
+	refresh();
 	
 	while (!client->loggedIn) {
 		awaitInput(client);
 
 		while (FD_ISSET(client->socket.fileDescriptor, &client->ioState)) {
-			handleServerResponse(client, output, &outputY);
+			handleServerResponse(client, &outputY);
 		}
 
 		while (
@@ -172,9 +167,11 @@ void phaseLogin(client_t* client) {
 			|| (digitalRead(DOWN_BUTTON) == LOW)
 			|| (digitalRead(VALIDATE_BUTTON) == LOW)
 		) {
-			handleUserInput(client, window, output, &outputY, login, &loginHead, password, &passwordHead, &editionMode);
+			handleUserInput(client, &outputY, login, &loginHead, password, &passwordHead, &editionMode);
 		}
 	}
+
+	endwin();
 }
 
 // ------------------------------------------------------------------------------------------------------
@@ -275,7 +272,7 @@ void* initialClientHandler(void* _) {
 	return NULL;
 }
 
-void handleServerResponse(client_t* client, WINDOW* output, unsigned* outputY) {
+void handleServerResponse(client_t* unsigned* outputY) {
 	char data[1024];
 	unsigned argCount;
 	int byteCount = recvData(&client->socket, data, 1024);
@@ -298,32 +295,32 @@ void handleServerResponse(client_t* client, WINDOW* output, unsigned* outputY) {
 	if (argCount > 2) {
 		char* text = joinString(&args[1], " ");
 		if (strcmp(args[0], "OUTPUT") == 0) {
-			mvwprintw(output, 1, *outputY, "serveur: %s", text);
+			mvprintw(1, *outputY, "serveur: %s", text);
 		} else if (strcmp(args[0], "ERROR") == 0) {
-			mvwprintw(output, 1, *outputY, "erreur: %s", text);
+			mvprintw(1, *outputY, "erreur: %s", text);
 		}
 		(*outputY)++;
 		freeJoin(text);
 	}
 }
 
-void handleUserInput(client_t* client, WINDOW* window, WINDOW* output, unsigned* outputY, char* login, unsigned* loginHead, char* password, unsigned* passwordHead, unsigned* editionMode) {
-	int character = wgetch(window);
+void handleUserInput(client_t* client, unsigned* outputY, char* login, unsigned* loginHead, char* password, unsigned* passwordHead, unsigned* editionMode) {
+	int character = getch();
 
 	if (character == '\n' || digitalRead(VALIDATE_BUTTON)) {
 		login[*loginHead] = '\0';
 		password[*passwordHead] = '\0';
-		mvwprintw(output, 1, *outputY, "Identification avec %s / %s ...", login, password);
+		mvprintw(1, *outputY, "Identification avec %s / %s ...", login, password);
 		(*outputY)++;
-		wrefresh(output);
+		wrefresh();
 		char message[COMMUNICATION_SIZE];
 		sprintf(message, "COMMAND LOGIN %s %s", login, password);
 		sendData(&client->socket, message);
 	} else if (character == 127) {
 		if ((*editionMode == 1 && *loginHead > 0) || (*editionMode == 2 && *passwordHead > 0)) {
 			unsigned x = *editionMode == 1 ? 21 + *loginHead : 16 + *passwordHead;
-			mvwprintw(window, *editionMode, x, " ");
-			wmove(window, *editionMode, x);
+			mvwprintw(, *editionMode, x, " ");
+			move(*editionMode, x);
 			if (*editionMode == 1) { (*loginHead)--; }
 			if (*editionMode == 2) { (*passwordHead)--; }
 		}
@@ -341,11 +338,11 @@ void handleUserInput(client_t* client, WINDOW* window, WINDOW* output, unsigned*
 			(*passwordHead)++;
 			x = 16 + *passwordHead;
 		}
-		mvwprintw(window, *editionMode, x, "%c", character);
+		mvprintw(*editionMode, x, "%c", character);
 	} else if (character == 9 || digitalRead(UP_BUTTON) || digitalRead(DOWN_BUTTON)) {
-		mvwprintw(window, *editionMode, 2, " ");
+		mvprintw(*editionMode, 2, " ");
 		*editionMode = (*editionMode == 1) ? 2 : 1;
-		mvwprintw(window, *editionMode, 2, ">");
+		mvprintw(*editionMode, 2, ">");
 	}
 }
 
