@@ -106,8 +106,26 @@ void awaitInput(client_t* client) {
 	select(maxFileDescriptor + 1, &client->ioState, NULL, NULL, &timeout);
 }
 
+int mainBlindClient(int argc, const char* argv[]) {
+	socket_t clientSocket;
+	connectServer(&clientSocket, argv[2], SERVER_PORT);
+	client_t client;
+	initClient(&client);
+	client.socket = clientSocket;
+	client.running = 1;
+	
+	while (client.running) {
+		awaitInput(&client);
+		handleClientSockets(&client, &client.ioState);
+	}
+
+	closeSocket(&clientSocket);
+	dropClient(&client);
+	return 0;
+}
+
 int mainClient(int argc, const char* argv[]) {
-	UNUSED(argc); UNUSED(argv);
+	UNUSED(argc);
 
 	initscr(); clear(); noecho(); cbreak(); keypad(stdscr, TRUE);
 	
@@ -126,6 +144,12 @@ int mainClient(int argc, const char* argv[]) {
 	client.socket = clientSocket;
 	client.running = 1;
 	client.loggedIn = 0;
+
+	if (strcmp(argv[3], "embedded")) {
+		client.embedded = 1;
+	} else {
+		client.embedded = 0;
+	}
 
 	phaseLogin(&client);
 	

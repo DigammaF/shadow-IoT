@@ -40,6 +40,7 @@ typedef struct {
 	fd_set ioState;
 	gui_t* gui;
 	int loggedIn;
+	int embedded;
 } client_t;
 
 typedef struct {
@@ -58,6 +59,7 @@ void dropGUI(gui_t* gui);
 
 int mainClient(int argc, const char* argv[]);
 int mainGUIClient(int argc, const char* argv[]);
+int mainBlindClient(int argc, const char* argv[]);
 
 void addWidgetToGUI(gui_t* gui, widget_t* widget);
 void removeWidgetFromGUI(gui_t* gui, widget_t* widget);
