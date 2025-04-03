@@ -139,8 +139,6 @@ int mainClient(int argc, const char* argv[]) {
 
 void phaseLogin(client_t* client) {
 	unsigned width = 60;
-	int startx = (COLS - width) / 2;
-	int starty = (LINES - 10) / 2;
 	unsigned outputY = 2;
 
 	char login[MAX_INPUT] = { 0 };
@@ -272,7 +270,7 @@ void* initialClientHandler(void* _) {
 	return NULL;
 }
 
-void handleServerResponse(client_t* unsigned* outputY) {
+void handleServerResponse(client_t* client, unsigned* outputY) {
 	char data[1024];
 	unsigned argCount;
 	int byteCount = recvData(&client->socket, data, 1024);
@@ -312,14 +310,14 @@ void handleUserInput(client_t* client, unsigned* outputY, char* login, unsigned*
 		password[*passwordHead] = '\0';
 		mvprintw(1, *outputY, "Identification avec %s / %s ...", login, password);
 		(*outputY)++;
-		wrefresh();
+		refresh();
 		char message[COMMUNICATION_SIZE];
 		sprintf(message, "COMMAND LOGIN %s %s", login, password);
 		sendData(&client->socket, message);
 	} else if (character == 127) {
 		if ((*editionMode == 1 && *loginHead > 0) || (*editionMode == 2 && *passwordHead > 0)) {
 			unsigned x = *editionMode == 1 ? 21 + *loginHead : 16 + *passwordHead;
-			mvwprintw(, *editionMode, x, " ");
+			mvprintw(*editionMode, x, " ");
 			move(*editionMode, x);
 			if (*editionMode == 1) { (*loginHead)--; }
 			if (*editionMode == 2) { (*passwordHead)--; }
