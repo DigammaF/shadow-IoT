@@ -292,6 +292,7 @@ void handleServerResponse(client_t* client, unsigned* outputY) {
 	}
 
 	if (argCount > 2) {
+		clear();
 		char* text = joinString(&args[1], " ");
 		if (strcmp(args[0], "OUTPUT") == 0) {
 			mvprintw(1, *outputY, "serveur: %s", text);
@@ -300,6 +301,7 @@ void handleServerResponse(client_t* client, unsigned* outputY) {
 		}
 		(*outputY)++;
 		freeJoin(text);
+		refresh();
 	}
 }
 
@@ -307,6 +309,7 @@ void handleUserInput(client_t* client, unsigned* outputY, char* login, unsigned*
 	int character = getch();
 
 	if (character == '\n') {
+		clear();
 		login[*loginHead] = '\0';
 		password[*passwordHead] = '\0';
 		mvprintw(1, *outputY, "Identification avec %s / %s ...", login, password);
