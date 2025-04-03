@@ -141,7 +141,7 @@ void clientTest() {
 	pullUpDnControl(VALIDATE_BUTTON, PUD_DOWN);
 
 	while (1) {
-		if (digitalRead(UP_BUTTON) == HIGH) {
+		if (digitalRead(UP_BUTTON) == LOW) {
 			printf("pressed!");
 		}
 	}
