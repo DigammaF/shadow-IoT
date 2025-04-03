@@ -306,7 +306,7 @@ void handleServerResponse(client_t* client, unsigned* outputY) {
 void handleUserInput(client_t* client, unsigned* outputY, char* login, unsigned* loginHead, char* password, unsigned* passwordHead, unsigned* editionMode) {
 	int character = getch();
 
-	if (character == '\n' || digitalRead(VALIDATE_BUTTON)) {
+	if (character == '\n') {
 		login[*loginHead] = '\0';
 		password[*passwordHead] = '\0';
 		mvprintw(1, *outputY, "Identification avec %s / %s ...", login, password);
