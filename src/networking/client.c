@@ -338,10 +338,12 @@ void handleUserInput(client_t* client, unsigned* outputY, char* login, unsigned*
 			x = 16 + *passwordHead;
 		}
 		mvprintw(*editionMode, x, "%c", character);
+		refresh();
 	} else if (character == 9 || digitalRead(UP_BUTTON) || digitalRead(DOWN_BUTTON)) {
 		mvprintw(*editionMode, 2, " ");
 		*editionMode = (*editionMode == 1) ? 2 : 1;
 		mvprintw(*editionMode, 2, ">");
+		refresh();
 	}
 }
 
