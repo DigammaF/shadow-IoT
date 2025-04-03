@@ -146,12 +146,6 @@ int mainClient(int argc, const char* argv[]) {
 	client.running = 1;
 	client.loggedIn = 0;
 
-	if (strcmp(argv[3], "embedded")) {
-		client.embedded = 1;
-	} else {
-		client.embedded = 0;
-	}
-
 	phaseLogin(&client);
 	
 	while (client.running) {
