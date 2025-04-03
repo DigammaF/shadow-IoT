@@ -129,14 +129,6 @@ int mainClient(int argc, const char* argv[]) {
 	UNUSED(argc);
 
 	initscr(); clear(); noecho(); cbreak(); keypad(stdscr, TRUE);
-	
-	wiringPiSetupGpio();
-	pinMode(UP_BUTTON, INPUT);
-	pinMode(DOWN_BUTTON, INPUT);
-	pinMode(VALIDATE_BUTTON, INPUT);
-	pullUpDnControl(UP_BUTTON, PUD_DOWN);
-	pullUpDnControl(DOWN_BUTTON, PUD_DOWN);
-	pullUpDnControl(VALIDATE_BUTTON, PUD_DOWN);
 
 	socket_t clientSocket;
 	connectServer(&clientSocket, argv[2], SERVER_PORT);
@@ -145,6 +137,19 @@ int mainClient(int argc, const char* argv[]) {
 	client.socket = clientSocket;
 	client.running = 1;
 	client.loggedIn = 0;
+
+	if (strcmp(argv[3], "embedded")) { client.embedded = 1; }
+	else { client.embedded = 0; }
+
+	if (client.embedded) {
+		wiringPiSetupGpio();
+		pinMode(UP_BUTTON, INPUT);
+		pinMode(DOWN_BUTTON, INPUT);
+		pinMode(VALIDATE_BUTTON, INPUT);
+		pullUpDnControl(UP_BUTTON, PUD_DOWN);
+		pullUpDnControl(DOWN_BUTTON, PUD_DOWN);
+		pullUpDnControl(VALIDATE_BUTTON, PUD_DOWN);
+	}
 
 	phaseLogin(&client);
 	
@@ -181,9 +186,9 @@ void phaseLogin(client_t* client) {
 
 		if (
 			FD_ISSET(fileno(stdin), &client->ioState)
-			|| (digitalRead(UP_BUTTON))
-			|| (digitalRead(DOWN_BUTTON))
-			|| (digitalRead(VALIDATE_BUTTON))
+			|| (client->embedded && digitalRead(UP_BUTTON))
+			|| (client->embedded && digitalRead(DOWN_BUTTON))
+			|| (client->embedded && digitalRead(VALIDATE_BUTTON))
 		) {
 			handleUserInput(client, &outputY, login, &loginHead, password, &passwordHead, &editionMode);
 		}
@@ -327,7 +332,7 @@ void handleServerResponse(client_t* client, unsigned* outputY) {
 void handleUserInput(client_t* client, unsigned* outputY, char* login, unsigned* loginHead, char* password, unsigned* passwordHead, unsigned* editionMode) {
 	int character = getch();
 
-	if (character == '\n' || digitalRead(VALIDATE_BUTTON)) {
+	if (character == '\n' || (client->embedded && digitalRead(VALIDATE_BUTTON))) {
 		clear();
 		login[*loginHead] = '\0';
 		password[*passwordHead] = '\0';
@@ -361,7 +366,7 @@ void handleUserInput(client_t* client, unsigned* outputY, char* login, unsigned*
 		}
 		mvprintw(*editionMode, x, "%c", character);
 		refresh();
-	} else if (character == 9 || digitalRead(UP_BUTTON) || digitalRead(DOWN_BUTTON)) {
+	} else if (character == 9 || (client->embedded && digitalRead(UP_BUTTON)) || (client->embedded && digitalRead(DOWN_BUTTON))) {
 		mvprintw(*editionMode, 2, " ");
 		*editionMode = (*editionMode == 1) ? 2 : 1;
 		mvprintw(*editionMode, 2, ">");
