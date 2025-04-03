@@ -108,6 +108,8 @@ void awaitInput(client_t* client) {
 
 int mainClient(int argc, const char* argv[]) {
 	UNUSED(argc); UNUSED(argv);
+
+	initscr(); clear(); noecho(); cbreak(); keypad(stdscr, TRUE);
 	
 	wiringPiSetupGpio();
 	pinMode(UP_BUTTON, INPUT);
@@ -138,7 +140,6 @@ int mainClient(int argc, const char* argv[]) {
 }
 
 void phaseLogin(client_t* client) {
-	unsigned width = 60;
 	unsigned outputY = 2;
 
 	char login[MAX_INPUT] = { 0 };
