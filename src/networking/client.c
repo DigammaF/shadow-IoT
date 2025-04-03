@@ -167,7 +167,7 @@ void phaseLogin(client_t* client) {
 		}
 
 		while (
-			D_ISSET(fileno(stdin), &client->ioState)
+			FD_ISSET(fileno(stdin), &client->ioState)
 			|| (digitalRead(UP_BUTTON) == LOW)
 			|| (digitalRead(DOWN_BUTTON) == LOW)
 			|| (digitalRead(VALIDATE_BUTTON) == LOW)

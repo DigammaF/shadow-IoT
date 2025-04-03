@@ -68,6 +68,8 @@ typedef struct {
 	unsigned argCount;
 } server_request_context_t;
 
+void handleUserInput(client_t* client, WINDOW* window, WINDOW* output, unsigned* outputY, char* login, unsigned* loginHead, char* password, unsigned* passwordHead, unsigned* editionMode);
+void handleServerResponse(client_t* client, WINDOW* output, unsigned* outputY);
 void phaseLogin(client_t* client);
 
 void* initialClientHandler(void* _);
