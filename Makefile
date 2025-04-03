@@ -12,7 +12,7 @@ CFLAGS =\
 	-Wall -Wextra -pthread\
 	-Iinclude -Iinclude/$(DATA_STRUCTURES) -Iinclude/$(GAME) -Iinclude/$(NETWORKING) -Iinclude/$(COMMON)\
 	-Ilantern/include
-LDFLAGS = -Llantern -llantern -lncurses -pthread -g
+LDFLAGS = -Llantern -llantern -lncurses -lwiringPi -pthread -g
 
 # Source files
 SRC =\
