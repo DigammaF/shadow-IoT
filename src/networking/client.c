@@ -156,11 +156,11 @@ void phaseLogin(client_t* client) {
 	while (!client->loggedIn) {
 		awaitInput(client);
 
-		while (FD_ISSET(client->socket.fileDescriptor, &client->ioState)) {
+		if (FD_ISSET(client->socket.fileDescriptor, &client->ioState)) {
 			handleServerResponse(client, &outputY);
 		}
 
-		while (
+		if (
 			FD_ISSET(fileno(stdin), &client->ioState)
 			|| (digitalRead(UP_BUTTON) == LOW)
 			|| (digitalRead(DOWN_BUTTON) == LOW)
