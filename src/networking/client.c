@@ -131,6 +131,22 @@ void activateBuzzer(int duration){
     digitalWrite(BUZZER, LOW);
 }
 
+void clientTest() {
+	wiringPiSetupGpio();
+	pinMode(UP_BUTTON, INPUT);
+	pinMode(DOWN_BUTTON, INPUT);
+	pinMode(VALIDATE_BUTTON, INPUT);
+	pullUpDnControl(UP_BUTTON, PUD_DOWN);
+	pullUpDnControl(DOWN_BUTTON, PUD_DOWN);
+	pullUpDnControl(VALIDATE_BUTTON, PUD_DOWN);
+
+	while (1) {
+		if (digitalRead(UP_BUTTON)) {
+			printf("pressed!");
+		}
+	}
+}
+
 int mainClient(int argc, const char* argv[]) {
 	UNUSED(argc);
 
