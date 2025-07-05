@@ -6,11 +6,13 @@ DATA_STRUCTURES = data_structures
 GAME = game
 NETWORKING = networking
 COMMON = common
+INTERFACE = interface
 
 CC = gcc
 CFLAGS =\
 	-Wall -Wextra -pthread\
 	-Iinclude -Iinclude/$(DATA_STRUCTURES) -Iinclude/$(GAME) -Iinclude/$(NETWORKING) -Iinclude/$(COMMON)\
+	-Iinclude/$(INTERFACE)\
 	-Ilantern/include
 LDFLAGS = -Llantern -llantern -lncurses -lwiringPi -pthread -g
 
@@ -29,7 +31,8 @@ SRC =\
 	$(SRC_DIR)/$(NETWORKING)/user.c $(SRC_DIR)/$(NETWORKING)/account.c\
 	$(SRC_DIR)/$(NETWORKING)/client.c $(SRC_DIR)/$(NETWORKING)/event_handlers.c\
 	$(SRC_DIR)/$(NETWORKING)/combat_command_handler.c $(SRC_DIR)/$(NETWORKING)/gameworld_command_handler.c\
-	$(SRC_DIR)/$(NETWORKING)/initial_command_handler.c
+	$(SRC_DIR)/$(NETWORKING)/initial_command_handler.c\
+	$(SRC_DIR)/$(INTERFACE)/buttons.c $(SRC_DIR)/$(INTERFACE)/interactive_client.c $(SRC_DIR)/$(INTERFACE)/led.c 
 
 # Object files
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -51,6 +54,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)/$(GAME)
 	@mkdir -p $(OBJ_DIR)/$(NETWORKING)
 	@mkdir -p $(OBJ_DIR)/$(COMMON)
+	@mkdir -p $(OBJ_DIR)/$(INTERFACE)
 	$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
 
 # Clean build artifacts

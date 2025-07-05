@@ -13,13 +13,14 @@ struct champion_t;
  * Z: entiers relatifs
  * N: entiers positifs
  * 
- * SET-TARGET 0|1 choisit la cible entre source et destination
- * SET-HEALTH Z change les points de vie de la cible
- * ADD-EFFECT N ajoute un effet à la cible
- * REM-EFFECT N enlève l'effet à la cible
- * IF-EFFECT N si la cible n'a pas cet effet, arrêter
- * IF-TYPE N si la cible n'est pas de ce type, arrêter
- * NOOP pas d'action
+ * OP			ARG		DESCR
+ * SET-TARGET 	0|1		choisit la cible entre source et destination
+ * SET-HEALTH 	Z 		change les points de vie de la cible
+ * ADD-EFFECT 	N 		ajoute un effet à la cible
+ * REM-EFFECT 	N 		enlève l'effet à la cible
+ * IF-EFFECT 	N 		si la cible n'a pas cet effet, arrêter
+ * IF-TYPE 		N 		si la cible n'est pas de ce type, arrêter
+ * NOOP 				pas d'action
  * 
 */
 

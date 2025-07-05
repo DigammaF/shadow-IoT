@@ -143,6 +143,8 @@ void clientTest() {
 	while (1) {
 		if (digitalRead(UP_BUTTON) == LOW) {
 			printf("pressed!");
+		} else {
+			printf("not pressed");
 		}
 	}
 }
@@ -458,6 +460,7 @@ int mainGUIClient(int argc, const char* argv[]) {
 
 			if (character == '\n') { keyboard->enter = true; }
 			if (character == 9) { keyboard->tab = true; }
+			if (digitalRead(UP_BUTTON)) { keyboard->key_up = true; }
 			if (character == KEY_UP) { keyboard->key_up = true; }
 			if (character == KEY_DOWN) { keyboard->key_down = true; }
 			if (character >= 32 && character <= 126) { keyboard->character = (char)character; }
