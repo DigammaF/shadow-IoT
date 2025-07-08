@@ -92,13 +92,11 @@ void testButton() {
 	pinMode(UP_BUTTON, INPUT);
 	pullUpDnControl(UP_BUTTON, PUD_UP);
 	int pin = wpiPinToGpio(UP_BUTTON);
-	printf("%d\n", pin);
-	getchar();
 
 	while (1) {
 		if (digitalRead(UP_BUTTON) == LOW) {
 			printf("pressed!\n");
-		}
+		} else { printf("not pressed?\n"); }
 	}
 }
 
@@ -147,7 +145,16 @@ int mainClient(int argc, const char** argv) {
 }
 
 void setupInitial(client_t* client) {
-	UNUSED(client);
+	widget_t widget;
+	initWidget(&widget);
+	char** options = malloc(4*sizeof(char*));
+	CHECKM(options, "malloc options");
+	options[0] = "Option 1";
+	options[1] = "Option 2";
+	options[2] = "Option 3";
+	options[3] = "Option 4";
+	initMenu(&widget, options, 4);
+	client->gui.root = widget;
 }
 
 void resetInput(input_t* input) {
@@ -165,9 +172,10 @@ void scanUserInput(client_t* client) {
 		if (character == 'a') { client->gui.input.up = true; }
 		if (character == 'q') { client->gui.input.down = true; }
 		if (character == 'e') { client->gui.input.validate = true; }
+
+		if (digitalRead(UP_BUTTON)) { client->gui.input.up = true; }
+		if (digitalRead(DOWN_BUTTON)) { client->gui.input.down = true; }
 	}
-
-
 }
 
 // --- MENU -------------------------------------------
@@ -182,6 +190,7 @@ void initMenu(widget_t* widget, char** entries, unsigned entryCount) {
 	widget->properties = properties;
 	widget->update = updateMenu;
 	widget->render = renderMenu;
+	widget->requireRender = true;
 }
 
 void dropMenu(widget_t* widget) {

@@ -9,9 +9,9 @@
 #include "hashmap.h"
 #include "lantern.h"
 
-#define UP_BUTTON 37
-#define DOWN_BUTTON 33
-#define VALIDATE_BUTTON 35
+#define UP_BUTTON 26
+#define DOWN_BUTTON 13
+#define VALIDATE_BUTTON 19
 
 typedef struct {
 	bool up; bool down; bool left; bool right;
