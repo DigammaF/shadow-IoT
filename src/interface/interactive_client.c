@@ -90,20 +90,11 @@ void testInput() {
 void testButton() {
 	wiringPiSetupGpio();
 	pinMode(UP_BUTTON, INPUT);
-	pinMode(DOWN_BUTTON, INPUT);
-	pinMode(VALIDATE_BUTTON, INPUT);
 	pullUpDnControl(UP_BUTTON, PUD_UP);
-	pullUpDnControl(DOWN_BUTTON, PUD_UP);
-	pullUpDnControl(VALIDATE_BUTTON, PUD_UP);
-	bool pressed = false;
 
 	while (1) {
-		if (digitalRead(UP_BUTTON) == LOW && !pressed) {
-			pressed = true;
+		if (digitalRead(UP_BUTTON) == LOW) {
 			printf("pressed!");
-		} else if (pressed) {
-			pressed = false;
-			printf("not pressed");
 		}
 	}
 }
