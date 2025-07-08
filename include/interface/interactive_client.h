@@ -62,6 +62,8 @@ void handleRender(gui_t* gui, client_t* client);
 void setupClientFileDescriptorSet(client_t* client, fd_set* fileDescriptorSet, int* maxFileDescriptor);
 void awaitInput(client_t* client);
 
+void testInput();
+
 int mainClient(int argc, const char** argv);
 
 void setupInitial(client_t* client);

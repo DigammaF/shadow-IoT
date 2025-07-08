@@ -38,7 +38,7 @@ void handleRender(gui_t* gui, client_t* client) {
 	widget_t root = gui->root;
 
 	if (root.requireRender) {
-		printf("\n\n\n\n\n\n");
+		printf("\n\n\n\n\n\n\n\n\n\n\n\n");
 		widget_context_t context = { .client = client, .widget = &root };
 		root.render(&context);
 	}
@@ -67,6 +67,25 @@ void awaitInput(client_t* client) {
 	select(maxFileDescriptor + 1, &client->ioState, NULL, NULL, &timeout);
 }
 
+void testInput() {
+	input_t input;
+	fd_set fileDescriptorSet;
+	FD_ZERO(&fileDescriptorSet);
+	int stdinFileDescriptor = fileno(stdin);
+	FD_SET(stdinFileDescriptor, &fileDescriptorSet);
+
+	while (true) {
+		resetInput(&input);
+		struct timeval timeout = { 0, SERVER_TICK };
+		select(stdinFileDescriptor, &fileDescriptorSet, NULL, NULL, &timeout);
+
+		while (FD_ISSET(stdinFileDescriptor, &fileDescriptorSet)) {
+			char character = getchar();
+			printf("'%d'\n", character);
+		}
+	}
+}
+
 int mainClient(int argc, const char** argv) {
 	UNUSED(argc); UNUSED(argv);
 	socket_t clientSocket;
@@ -93,13 +112,22 @@ int mainClient(int argc, const char** argv) {
 			client.messageHandler(&context);
 		}
 
-		handleUpdate(&client.gui, &client);
-		handleRender(&client.gui, &client);
+		// read input
+		resetInput(&client.gui.keyboard);
+
+		while (FD_ISSET(fileno(stdin), &client.ioState)) {
+			scanUserInput(&client.gui.keyboard);
+		}
+
+		//handleUpdate(&client.gui, &client);
+		//handleRender(&client.gui, &client);
 	}
+
+	return EXIT_SUCCESS;
 }
 
 void setupInitial(client_t* client) {
-
+	UNUSED(client);
 }
 
 void resetInput(input_t* input) {
@@ -110,7 +138,11 @@ void resetInput(input_t* input) {
 	input->validate = false;
 }
 
-void scanUserInput(input_t* input) { UNUSED(input); } // TODO
+void scanUserInput(input_t* input) {
+	UNUSED(input);
+	char character = getchar();
+	printf("'%d'\n", character);
+}
 
 // --- MENU -------------------------------------------
 
@@ -137,10 +169,9 @@ void* updateMenu(void* _) {
 	menu_properties_t* properties = (menu_properties_t*)widget->properties;
 
 	if (client->gui.keyboard.up) {
-		properties->selection--;
+		if (properties->selection == 0) { properties->selection = properties->entryCount; }
+		else { properties->selection--; }
 		widget->requireRender = true;
-
-		if (properties->selection < 0) { properties->selection = properties->entryCount; }
 	}
 
 	if (client->gui.keyboard.down) {
@@ -151,6 +182,8 @@ void* updateMenu(void* _) {
 	}
 
 	if (client->gui.keyboard.validate) { properties->handleValidate(context); }
+
+	return NULL;
 }
 
 void* renderMenu(void* _) {
@@ -158,10 +191,12 @@ void* renderMenu(void* _) {
 	widget_t* widget = context->widget;
 	menu_properties_t* properties = (menu_properties_t*)widget->properties;
 
-	for (int n = 0; n < properties->entryCount; n++) {
-		if (n == properties->selection) { printf("(*) %s"); }
-		else { printf("( ) %s"); }
+	for (unsigned n = 0; n < properties->entryCount; n++) {
+		if (n == properties->selection) { printf("(*) %s", properties->entries[n]); }
+		else { printf("( ) %s", properties->entries[n]); }
 	}
+
+	return NULL;
 }
 
 // ----------------------------------------------------
