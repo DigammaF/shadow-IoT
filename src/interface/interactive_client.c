@@ -167,12 +167,6 @@ void resetInput(input_t* input) {
 
 void scanUserInput(client_t* client) {
 	while (FD_ISSET(fileno(stdin), &client->ioState)) {
-		char character = getchar();
-
-		if (character == 'a') { client->gui.input.up = true; }
-		if (character == 'q') { client->gui.input.down = true; }
-		if (character == 'e') { client->gui.input.validate = true; }
-
 		if (digitalRead(UP_BUTTON)) { client->gui.input.up = true; }
 		if (digitalRead(DOWN_BUTTON)) { client->gui.input.down = true; }
 	}
