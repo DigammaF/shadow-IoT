@@ -91,10 +91,13 @@ void testButton() {
 	wiringPiSetupGpio();
 	pinMode(UP_BUTTON, INPUT);
 	pullUpDnControl(UP_BUTTON, PUD_UP);
+	int pin = wpiPinToGpio(UP_BUTTON);
+	printf("%d\n", pin);
+	getchar();
 
 	while (1) {
-		if (digitalRead(UP_BUTTON) == HIGH) {
-			printf("pressed!");
+		if (digitalRead(UP_BUTTON) == LOW) {
+			printf("pressed!\n");
 		}
 	}
 }
