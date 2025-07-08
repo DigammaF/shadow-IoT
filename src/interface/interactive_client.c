@@ -1,6 +1,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <wiringPi.h>
 
 #include "constants.h"
 #include "function_stack.h"
@@ -86,8 +87,33 @@ void testInput() {
 	}
 }
 
+void testButton() {
+	wiringPiSetupGpio();
+	pinMode(UP_BUTTON, INPUT);
+	pinMode(DOWN_BUTTON, INPUT);
+	pinMode(VALIDATE_BUTTON, INPUT);
+	pullUpDnControl(UP_BUTTON, PUD_UP);
+	pullUpDnControl(DOWN_BUTTON, PUD_UP);
+	pullUpDnControl(VALIDATE_BUTTON, PUD_UP);
+
+	while (1) {
+		if (digitalRead(UP_BUTTON) == LOW) {
+			printf("pressed!");
+		} else {
+			printf("not pressed");
+		}
+	}
+}
+
 int mainClient(int argc, const char** argv) {
 	UNUSED(argc); UNUSED(argv);
+	wiringPiSetupGpio();
+	pinMode(UP_BUTTON, INPUT);
+	pinMode(DOWN_BUTTON, INPUT);
+	pinMode(VALIDATE_BUTTON, INPUT);
+	pullUpDnControl(UP_BUTTON, PUD_DOWN);
+	pullUpDnControl(DOWN_BUTTON, PUD_DOWN);
+	pullUpDnControl(VALIDATE_BUTTON, PUD_DOWN);
 	socket_t clientSocket;
 	connectServer(&clientSocket, argv[2], SERVER_PORT);
 	client_t client;
@@ -113,14 +139,11 @@ int mainClient(int argc, const char** argv) {
 		}
 
 		// read input
-		resetInput(&client.gui.keyboard);
+		resetInput(&client.gui.input);
+		scanUserInput(&client);
 
-		while (FD_ISSET(fileno(stdin), &client.ioState)) {
-			scanUserInput(&client.gui.keyboard);
-		}
-
-		//handleUpdate(&client.gui, &client);
-		//handleRender(&client.gui, &client);
+		handleUpdate(&client.gui, &client);
+		handleRender(&client.gui, &client);
 	}
 
 	return EXIT_SUCCESS;
@@ -138,10 +161,16 @@ void resetInput(input_t* input) {
 	input->validate = false;
 }
 
-void scanUserInput(input_t* input) {
-	UNUSED(input);
-	char character = getchar();
-	printf("'%d'\n", character);
+void scanUserInput(client_t* client) {
+	while (FD_ISSET(fileno(stdin), &client->ioState)) {
+		char character = getchar();
+
+		if (character == 'a') { client->gui.input.up = true; }
+		if (character == 'q') { client->gui.input.down = true; }
+		if (character == 'e') { client->gui.input.validate = true; }
+	}
+
+
 }
 
 // --- MENU -------------------------------------------
@@ -168,20 +197,20 @@ void* updateMenu(void* _) {
 	widget_t* widget = context->widget;
 	menu_properties_t* properties = (menu_properties_t*)widget->properties;
 
-	if (client->gui.keyboard.up) {
+	if (client->gui.input.up) {
 		if (properties->selection == 0) { properties->selection = properties->entryCount; }
 		else { properties->selection--; }
 		widget->requireRender = true;
 	}
 
-	if (client->gui.keyboard.down) {
+	if (client->gui.input.down) {
 		properties->selection++;
 		widget->requireRender = true;
 
 		if (properties->selection >= properties->entryCount) { properties->selection = 0; }
 	}
 
-	if (client->gui.keyboard.validate) { properties->handleValidate(context); }
+	if (client->gui.input.validate) { properties->handleValidate(context); }
 
 	return NULL;
 }

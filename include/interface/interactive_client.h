@@ -9,6 +9,10 @@
 #include "hashmap.h"
 #include "lantern.h"
 
+#define UP_BUTTON 37
+#define DOWN_BUTTON 33
+#define VALIDATE_BUTTON 35
+
 typedef struct {
 	bool up; bool down; bool left; bool right;
 	bool validate;
@@ -24,7 +28,7 @@ typedef struct {
 
 typedef struct {
 	widget_t root;
-	input_t keyboard;
+	input_t input;
 } gui_t;
 
 typedef struct {
@@ -63,13 +67,14 @@ void setupClientFileDescriptorSet(client_t* client, fd_set* fileDescriptorSet, i
 void awaitInput(client_t* client);
 
 void testInput();
+void testButton();
 
 int mainClient(int argc, const char** argv);
 
 void setupInitial(client_t* client);
 
 void resetInput(input_t* input);
-void scanUserInput(input_t* input);
+void scanUserInput(client_t* input);
 
 // --- MENU -------------------------------------------
 
@@ -88,4 +93,3 @@ void* renderMenu(void* _);
 // ----------------------------------------------------
 
 #endif
-
