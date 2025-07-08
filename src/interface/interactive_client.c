@@ -227,8 +227,8 @@ void* renderMenu(void* _) {
 	menu_properties_t* properties = (menu_properties_t*)widget->properties;
 
 	for (unsigned n = 0; n < properties->entryCount; n++) {
-		if (n == properties->selection) { printf("(*) %s", properties->entries[n]); }
-		else { printf("( ) %s", properties->entries[n]); }
+		if (n == properties->selection) { printf("(*) %s\n", properties->entries[n]); }
+		else { printf("( ) %s\n", properties->entries[n]); }
 	}
 
 	return NULL;
