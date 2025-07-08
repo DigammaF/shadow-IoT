@@ -93,7 +93,7 @@ void testButton() {
 	pullUpDnControl(UP_BUTTON, PUD_UP);
 
 	while (1) {
-		if (digitalRead(UP_BUTTON) == LOW) {
+		if (digitalRead(UP_BUTTON) == HIGH) {
 			printf("pressed!");
 		}
 	}
