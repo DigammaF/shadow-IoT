@@ -95,11 +95,14 @@ void testButton() {
 	pullUpDnControl(UP_BUTTON, PUD_UP);
 	pullUpDnControl(DOWN_BUTTON, PUD_UP);
 	pullUpDnControl(VALIDATE_BUTTON, PUD_UP);
+	bool pressed = false;
 
 	while (1) {
-		if (digitalRead(UP_BUTTON) == LOW) {
+		if (digitalRead(UP_BUTTON) == LOW && !pressed) {
+			pressed = true;
 			printf("pressed!");
-		} else {
+		} else if (pressed) {
+			pressed = false;
 			printf("not pressed");
 		}
 	}
