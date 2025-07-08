@@ -30,17 +30,18 @@ void initGUI(gui_t* gui) { UNUSED(gui); }
 void dropGUI(gui_t* gui) { UNUSED(gui); }
 
 void handleUpdate(gui_t* gui, client_t* client) {
-	widget_t root = gui->root;
-
-	if (root.requireRender) {
-		widget_context_t context = { .client = client, .widget = &root };
-		root.render(&context);
-	}
+	widget_context_t context = { .client = client, .widget = &gui->root };
+	gui->root.update(&context);
 }
 
 void handleRender(gui_t* gui, client_t* client) {
-	widget_context_t context = { .client = client, .widget = &gui->root };
-	gui->root.update(&context);
+	widget_t root = gui->root;
+
+	if (root.requireRender) {
+		printf("\n\n\n\n\n\n");
+		widget_context_t context = { .client = client, .widget = &root };
+		root.render(&context);
+	}
 }
 
 void setupClientFileDescriptorSet(client_t* client, fd_set* fileDescriptorSet, int* maxFileDescriptor) {
@@ -153,7 +154,14 @@ void* updateMenu(void* _) {
 }
 
 void* renderMenu(void* _) {
+	widget_context_t* context = (widget_context_t*)_;
+	widget_t* widget = context->widget;
+	menu_properties_t* properties = (menu_properties_t*)widget->properties;
 
+	for (int n = 0; n < properties->entryCount; n++) {
+		if (n == properties->selection) { printf("(*) %s"); }
+		else { printf("( ) %s"); }
+	}
 }
 
 // ----------------------------------------------------
